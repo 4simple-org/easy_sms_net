@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "easy_sms_net", "easy_sms_net.csproj", "{3DD39A1C-389A-4193-B8DC-12B3BB212C9D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sms_easy_example", "sms_easy_example\sms_easy_example.csproj", "{667803E6-F570-4937-87CE-8E731E940B59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{3DD39A1C-389A-4193-B8DC-12B3BB212C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DD39A1C-389A-4193-B8DC-12B3BB212C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DD39A1C-389A-4193-B8DC-12B3BB212C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667803E6-F570-4937-87CE-8E731E940B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667803E6-F570-4937-87CE-8E731E940B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667803E6-F570-4937-87CE-8E731E940B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667803E6-F570-4937-87CE-8E731E940B59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
