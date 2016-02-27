@@ -41,13 +41,20 @@ namespace easy_sms_net
 		/// Get your current account balance.
 		/// </summary>
 		/// <value>
-		/// 	Accout balance or a dictionary with the error code response like: {'error': 'Login error'}
+		/// 	Account balance or throw exception if something was wrong.
 		/// </value>
-		public string get_balance
+		public double get_balance
 		{
 			get {
 				Dictionary<string, string> result = send_payload ("balance", this.credentials);
-				return "---";
+				if (result.ContainsKey("balance")) {
+					return Convert.ToDouble(result ["balance"]);
+				}
+				string error = "unknow error";
+				if (result.ContainsKey("error")) {
+					error = result["error"];
+				}
+				throw new System.Exception (error);
 			}
 		}
 
@@ -59,13 +66,23 @@ namespace easy_sms_net
 		/// <param name="data">Data.</param>
 		private Dictionary<string, string> send_payload(string cmd, NameValueCollection data)
 		{
-			using (var client = new WebClient())
-			{
-				var response = client.UploadValues(this.API_URL+cmd, data);
-				string result = Encoding.Default.GetString(response);
-				JavaScriptSerializer json = new JavaScriptSerializer();
-				return json.Deserialize<Dictionary<string, string>>(result);
+			for (int i = 0; i < this.retries; i++) {
+				try {
+					using (var client = new WebClient())
+					{
+						var response = client.UploadValues(this.API_URL+cmd, data);
+						string result = Encoding.Default.GetString(response);
+						JavaScriptSerializer json = new JavaScriptSerializer();
+						return json.Deserialize<Dictionary<string, string>>(result);
+					}		
+				} catch (Exception) {
+					//retry #i fails
+				}
 			}
+
+			return new Dictionary<string,string>{
+				{"error", "Server is overloaded, max retries reached!"}
+			};
 		}
 	}
 }
