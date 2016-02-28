@@ -38,6 +38,48 @@ namespace easy_sms_net
 		}
 
 		/// <summary>
+		/// Send SMS using this function.
+		/// </summary>
+		/// <returns>The sms processing id for current message, or raise an exception if something was wrong.</returns>
+		/// <param name="to">Recipient phone number. Remember add international country code prefix.</param>
+		/// <param name="body">SMS text message to send.</param>
+		public int send_sms(string to, string body)
+		{
+			NameValueCollection data = new NameValueCollection (this.credentials);
+			data.Add ("to", to);
+			data.Add ("body", body);
+			Dictionary<string, string> result = send_payload ("sms", data);
+			if (result.ContainsKey("success") && result.ContainsKey("pid")) {
+				return Convert.ToInt32(result["pid"]);
+			}
+			string error = "unknow error";
+			if (result.ContainsKey("error")) {
+				error = result["error"];
+			}
+			throw new System.Exception (error);
+		}
+
+		/// <summary>
+		/// Get the delivered SMS status.
+		/// </summary>
+		/// <returns>The sms status or raise an exception if something was wrong.</returns>
+		/// <param name="pid">The SMS processing identifier (pid) returned when the SMS was sent.</param>
+		public string get_sms_status(int pid)
+		{
+			NameValueCollection data = new NameValueCollection (this.credentials);
+			data.Add ("pid", pid.ToString());
+			Dictionary<string, string> result = send_payload ("status", data);
+			if (result.ContainsKey("status")) {
+				return result["status"];
+			}
+			string error = "unknow error";
+			if (result.ContainsKey("error")) {
+				error = result["error"];
+			}
+			throw new System.Exception (error);
+		}
+
+		/// <summary>
 		/// Get your current account balance.
 		/// </summary>
 		/// <value>
