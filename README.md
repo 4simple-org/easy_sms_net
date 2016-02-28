@@ -1,29 +1,44 @@
-# README #
+SMS API Client for .Net
+=======================
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This lib allow easily add SMS text messages to .Net applications. Just create an account in
+https://easysms.4simple.org for obtain your API credential.
+Code Examples ::
 
-### What is this repository for? ###
+    using System;
+	using easy_sms_net;
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+	namespace sms_easy_example
+	{
+		class MainClass
+		{
+			public static void Main (string[] args)
+			{
+				// Step #1 is create an API client object using credential obtained from https://easysms.4simple.org/user/panel/
+				SMSClient api_obj = new SMSClient (22421, "39fec6acw3sh3b28a981cf5551a");
 
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+				//##########################################################################
+				//                HOW SEND AN SMS TEXT MESSAGE
+				//##########################################################################
+				int pid = api_obj.send_sms ("1535453343", "Hello testing");
+				Console.WriteLine ("PID: " + pid.ToString());
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+				//##########################################################################
+				//	                HOW CHECK ACCOUNT BALANCE
+				//##########################################################################
+				Console.WriteLine("Balance: " + api_obj.get_balance);
 
-### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+				//##########################################################################
+				//                 HOW CHECK SMS PROCESSING STATUS
+				//##########################################################################
+				Console.WriteLine("Status for pid 2343454: " + api_obj.get_sms_status(2343454));
+
+
+				Console.ReadLine ();
+			}
+		}
+	}
+	
